@@ -221,38 +221,45 @@ RSpec.describe ProjectsController, type: :controller do
     end
   end
 
-  # describe "#complete" do
-  #   context "as an authenticated user" do
-  #     let!(:project) { FactoryBot.create(:project, completed: nil) }
+  # =======テスト駆動開発（異常系：プロジェクトを完了できるようにする）==========================
+  describe "#complete" do
+    # 認証済みのユーザーとして
+    context "as an authenticated user" do
+      let!(:project) { FactoryBot.create(:project, completed: nil) }
 
-  #     before do
-  #       sign_in project.owner
-  #     end
+      before do
+        sign_in project.owner
+      end
 
-  #     describe "an unsuccessful completion" do
-  #       before do
-  #         allow_any_instance_of(Project).
-  #           to receive(:update_attributes).
-  #           with(completed: true).
-  #           and_return(false)
-  #       end
+      # 成功しないプロジェクトの完了
+      describe "an unsuccessful completion" do
+        before do
+          # ❓
+          allow_any_instance_of(Project).
+            to receive(:update_attributes).
+            with(completed: true).
+            and_return(false)
+        end
 
-  #       it "redirects to the project page" do
-  #         patch :complete, params: { id: project.id }
-  #         expect(response).to redirect_to project_path(project)
-  #       end
+        # プロジェクト画面にリダイレクトすること
+        it "redirects to the project page" , focus: true do
+          patch :complete, params: { id: project.id }
+          expect(response).to redirect_to project_path(project)
+        end
 
-  #       it "sets the flash" do
-  #         patch :complete, params: { id: project.id }
-  #         expect(flash[:alert]).to eq "Unable to complete project."
-  #       end
+        # フラッシュを設定すること
+        it "sets the flash" , focus: true do
+          patch :complete, params: { id: project.id }
+          expect(flash[:alert]).to eq "Unable to complete project."
+        end
 
-  #       it "doesn't mark the project as completed" do
-  #         expect {
-  #           patch :complete, params: { id: project.id }
-  #         }.to_not change(project, :completed)
-  #       end
-  #     end
-  #   end
-  # end
+        # プロジェクトを完了済みにしないこと
+        it "doesn't mark the project as completed" , focus: true do
+          expect {
+            patch :complete, params: { id: project.id }
+          }.to_not change(project, :completed)
+        end
+      end
+    end
+  end
 end

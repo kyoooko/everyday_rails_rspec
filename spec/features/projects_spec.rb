@@ -38,7 +38,7 @@ RSpec.feature "Projects", type: :feature do
   #   click_link "New Project"
   # end
 
-  # ===================テスト駆動開発（プロジェクトを完了できるようにする）==========================
+  # ===================テスト駆動開発（正常系：プロジェクトを完了できるようにする）==========================
   # ユーザーは新しいプロジェクトを作成する
   scenario "user creates a new project", focus: true do
     # プロジェクトを持ったユーザーを準備する
@@ -48,18 +48,26 @@ RSpec.feature "Projects", type: :feature do
     sign_in user
     # ユーザーがプロジェクト画面を開き
     visit project_path(project)
+
+    # 追加
+    # Completedが表示されていないこと
+    expect(page).to_not have_content "Completed"
+
     # "complete" ボタンをクリックすると
     click_button "Complete"
 
-    # テスト駆動開発
+    # =================テスト駆動開発===================
     # 一時的に Launchy をテストに組み込む
     # save_and_open_page
 
     # プロジェクトは完了済みとしてマークされる
     expect(project.reload.completed?).to be true
+    # フラッシュメッセージ表示
     expect(page).to \
       have_content "Congratulations, this project is complete!"
+    # Completedが表示される
     expect(page).to have_content "Completed"
+    # ボタンが消える
     expect(page).to_not have_button "Complete"
   end
 

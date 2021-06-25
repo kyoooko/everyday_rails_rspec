@@ -63,11 +63,14 @@ class ProjectsController < ApplicationController
     end
   end
 
-  # テスト駆動開発
+  # =====================テスト駆動開発=====================
   def complete
-    @project.update_attributes!(completed: true)
-    redirect_to @project,
-      notice: "Congratulations, this project is complete!"
+    if @project.update_attributes(completed: true)
+      redirect_to @project,
+        notice: "Congratulations, this project is complete!"
+    else
+      redirect_to @project, alert: "Unable to complete project."
+    end
   end
 
   private

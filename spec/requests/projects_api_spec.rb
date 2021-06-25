@@ -1,5 +1,6 @@
 require 'rails_helper'
-describe 'Projects API', type: :request do # 1件のプロジェクトを読み出すこと
+describe 'Projects API', type: :request do
+  # 1件のプロジェクトを読み出すこと
 it 'loads a project' do
     user = FactoryBot.create(:user)
     # プロジェクト①

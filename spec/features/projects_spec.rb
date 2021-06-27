@@ -40,7 +40,7 @@ RSpec.feature "Projects", type: :feature do
 
   # ===================テスト駆動開発（正常系：プロジェクトを完了できるようにする）==========================
   # ユーザーは新しいプロジェクトを作成する
-  scenario "user creates a new project", focus: true do
+  scenario "user creates a new project"do
     # プロジェクトを持ったユーザーを準備する
     user = FactoryBot.create(:user)
     project = project = FactoryBot.create(:project, owner: user)

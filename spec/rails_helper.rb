@@ -26,6 +26,7 @@ require 'paperclip/matchers'
 # require only the support files necessary.
 #
 # rails_helper.rb はきれいな状態を保っておきたいので、R設定ファイルを spec/support ディレクトリに配置するよう設定
+# →RSpec.shared_context "project setup" doやカスタムヘルパー、カスタムマッチャなどを定義。spec/supportは rails_helper.rbの拡張したもの。
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 # Checks for pending migration and applies them before tests are run.
@@ -61,13 +62,16 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 
-  # コントローラスペックで Devise のテストヘルパーを使用する
-  config.include Devise::Test::ControllerHelpers, type: :controller
-  # リクエストスペックでテストヘルパーを使用する
+  # ===============Devise==============================
+  # https://github.com/heartcombo/devise/wiki/How-To:-sign-in-and-out-a-user-in-Request-type-specs-(specs-tagged-with-type:-:request)
+  # A：Devise のテストヘルパーを使用する(sign_inヘルパーなど、A more complicated exampleの方)
   config.include RequestSpecHelper, type: :request
-  # システムスペック移行のため下記追記（deviseのsign_inヘルパーなどが使える）
+  # 簡易的に導入するならconfig.include Devise::Test::IntegrationHelpers, type: :requestでもいい
+  # B：Devise のテストヘルパーを使用する(sign_inヘルパーなど)
+  config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::IntegrationHelpers, type: :feature
-  # config.include Devise::Test::IntegrationHelpers, type: :system
+  config.include Devise::Test::IntegrationHelpers, type: :system
+  # =============================================
 
   # 速くテストを書き、速いテストを書く
   Shoulda::Matchers.configure do |config|

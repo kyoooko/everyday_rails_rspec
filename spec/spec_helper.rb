@@ -93,6 +93,10 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
-# focus タグの付いたテストがあるときに、 そのタグを利用するよう設定
+  # 特定のタグの付いたテストのみ常に実行
   config.filter_run focus: true
+  # タグの付いているテストがなければ全spec実行
+  config.run_all_when_everything_filtered = true
+  # 特定のタグが付いた example は常にスキップ
+  config.filter_run_excluding slow: true
 end

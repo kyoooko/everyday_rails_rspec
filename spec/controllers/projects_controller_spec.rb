@@ -242,19 +242,19 @@ RSpec.describe ProjectsController, type: :controller do
         end
 
         # プロジェクト画面にリダイレクトすること
-        it "redirects to the project page" , focus: true do
+        it "redirects to the project page" do
           patch :complete, params: { id: project.id }
           expect(response).to redirect_to project_path(project)
         end
 
         # フラッシュを設定すること
-        it "sets the flash" , focus: true do
+        it "sets the flash" do
           patch :complete, params: { id: project.id }
           expect(flash[:alert]).to eq "Unable to complete project."
         end
 
         # プロジェクトを完了済みにしないこと
-        it "doesn't mark the project as completed" , focus: true do
+        it "doesn't mark the project as completed" do
           expect {
             patch :complete, params: { id: project.id }
           }.to_not change(project, :completed)

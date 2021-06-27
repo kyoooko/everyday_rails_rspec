@@ -15,7 +15,7 @@ it 'loads a project' do
       user_email: user.email,
       user_token: user.authentication_token
     }
-    # Response はブラウザに返すべきアプリケーションの全データを保持しているオブジェクトです
+    # Response はブラウザに返すべきアプリケーションの全データを保持しているオブジェクト
     expect(response).to have_http_status(:success)
     # JSON(ジェイソン)形式の文字列（テキスト）をハッシュに変換
     json = JSON.parse(response.body)

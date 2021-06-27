@@ -1,12 +1,13 @@
 # システムスペック移行
 require 'rails_helper'
 
-RSpec.feature "Tasks", type: :system, focus: true do
+# , focus: true
+RSpec.feature "Tasks", type: :system do
   # JSのテスト（タスクの終了チェックしたら線が引かれる）
   # webサービスのテストでVCR gemを導入したのでVCR::Errors::UnhandledHTTPRequestError.new(vcr_request)となる場合は,vcr: trueが必要
   it "user toggles a task",vcr: true, js: true do
     # 下記コメントアウトしテストを失敗させる
-    # user = FactoryBot.create(:user)
+    user = FactoryBot.create(:user)
     project = FactoryBot.create(:project,
       name: "RSpec tutorial",
       owner: user)

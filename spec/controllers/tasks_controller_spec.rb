@@ -1,7 +1,7 @@
 # ===============リファクタリング後========================
 require 'rails_helper'
 
-RSpec.describe TasksController, type: :controller do
+RSpec.describe TasksController, type: :controller, focus: true do
   # shared_context
   include_context "project setup"
 
